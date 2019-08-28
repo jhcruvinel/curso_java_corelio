@@ -1,6 +1,7 @@
 package exercicio;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class Cliente {
 
@@ -21,6 +22,33 @@ public class Cliente {
 	public Cliente() {
 		
 	}
+	
+	public static class Builder {
+		
+		public String nome;
+		public String sobrenome;
+		public String endereço;
+		public String telefone;
+
+        public Builder() {
+
+        }
+
+        public Builder set(Consumer<Builder> builder) {
+        	builder.accept(this);
+            return this;
+        }
+
+        public Cliente build() {
+        	Cliente m = new Cliente();
+        	m.nome = this.nome;
+            m.sobrenome = this.sobrenome;
+            m.endereço = this.endereço;
+            m.telefone = this.telefone;
+            return m;
+        }
+	}
+	
 
 	public String getNome() {
 		return nome;

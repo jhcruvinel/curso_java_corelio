@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 public class Movimentacao {
 
+	private Conta conta;
 	private Date dataHora;
 	private TipoMovimentacao tipoMovimentacao;
 	private String descricao;
@@ -15,6 +16,8 @@ public class Movimentacao {
 	}
 
 	public static class Builder {
+		
+		private Conta conta;
 		public Date dataHora;
 		public TipoMovimentacao tipoMovimentacao;
 		public String descricao;
@@ -31,6 +34,7 @@ public class Movimentacao {
 
         public Movimentacao build() {
         	Movimentacao m = new Movimentacao();
+        	m.conta = this.conta;
             m.dataHora = this.dataHora;
             m.tipoMovimentacao = this.tipoMovimentacao;
             m.descricao = this.descricao;
@@ -74,6 +78,14 @@ public class Movimentacao {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public Conta getConta() {
+		return conta;
+	}
+
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 	
 	
