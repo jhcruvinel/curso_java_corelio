@@ -9,11 +9,15 @@ public final class COAF implements Observer {
 		
 	@Override
 	public void auditaMovimentacao(Movimentacao movimentacao) {
-        if (movimentacao == null) {
-        	movimentacoes = new ArrayList<Movimentacao>();
-        }
         movimentacoes.add(movimentacao);
     }
+	
+	public void extratoMovimentacoesSuspeitas() {
+		System.out.println(" ******** MOVIMENTACOES SUSPEITAS ******** ");
+		movimentacoes.forEach(Movimentacao::imprime);
+		System.out.println(" ***************************************** ");
+	}
+
 	
 	private static volatile COAF instance;
 
@@ -22,6 +26,7 @@ public final class COAF implements Observer {
 	 */
 	private COAF() {
 		// to prevent instantiating by Reflection call
+		movimentacoes = new ArrayList<Movimentacao>();
 		if (instance != null) {
 			throw new IllegalStateException("Já inicializada.");
 		}

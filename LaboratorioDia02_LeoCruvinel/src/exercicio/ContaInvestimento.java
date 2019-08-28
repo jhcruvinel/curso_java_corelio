@@ -1,6 +1,6 @@
 package exercicio;
 
-public class ContaInvestimento {
+public class ContaInvestimento extends Conta {
 
 	private TipoAplicacao tipoAplicacao;
 
@@ -16,4 +16,7 @@ public class ContaInvestimento {
 		
 	}
 	
+	public ContaInvestimento() {
+		
+	}
 }
