@@ -1,6 +1,8 @@
 package laboratorio3.exemplos;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.ProxySelector;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -12,7 +14,8 @@ public class Exemplo_2 {
 
     public static void requisicaoGetSincrona() throws IOException, InterruptedException {
         // Criando o HttpClient
-        HttpClient client = HttpClient.newHttpClient();
+        HttpClient client = HttpClient.newBuilder().proxy(ProxySelector.of(
+        		new InetSocketAddress("cache.trt", 3128))).build();
         //Criando um HttpRequest do tipo Get e especificando a URI de consulta
         HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("https://jsonplaceholder.typicode.com/posts/1")).build();
         // Enviando a requisição e recebendo o Objeto de resposta da mesma.

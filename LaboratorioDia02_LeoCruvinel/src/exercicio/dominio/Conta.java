@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.function.Consumer;
 
 import exercicio.util.COAF;
 import exercicio.util.ContaVisitor;
@@ -18,6 +17,7 @@ public class Conta implements Subject {
 	private Cliente cliente;
 	private List<Movimentacao> movimentacoes;
 	private List<Observer> observers;
+	private TipoConta tipoConta;
 
     @Override
     public void registerObserver(Observer o) {
@@ -101,32 +101,6 @@ public class Conta implements Subject {
 		registerObserver(COAF.getInstance());
 	}
 	
-	public static class Builder {
-		
-		public long id;
-		public double saldo;
-		public Cliente cliente;
-		public List<Movimentacao> movimentacoes = new ArrayList<Movimentacao>();
-
-        public Builder() {
-
-        }
-
-        public Builder set(Consumer<Builder> builder) {
-        	builder.accept(this);
-            return this;
-        }
-
-        public Conta build() {
-        	Conta m = new Conta();
-        	m.id = this.id;
-            m.saldo = this.saldo;
-            m.cliente = this.cliente;
-            m.movimentacoes = this.movimentacoes;
-            return m;
-        }
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -157,6 +131,14 @@ public class Conta implements Subject {
 
 	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
 		this.movimentacoes = movimentacoes;
+	}
+
+	public TipoConta getTipoConta() {
+		return tipoConta;
+	}
+
+	public void setTipoConta(TipoConta tipoConta) {
+		this.tipoConta = tipoConta;
 	}
 	
 	
