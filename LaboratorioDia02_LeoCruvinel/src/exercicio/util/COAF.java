@@ -1,7 +1,9 @@
-package exercicio;
+package exercicio.util;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import exercicio.dominio.Movimentacao;
 
 public final class COAF implements Observer {
 

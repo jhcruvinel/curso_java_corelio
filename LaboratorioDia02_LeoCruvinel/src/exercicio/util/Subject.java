@@ -1,4 +1,6 @@
-package exercicio;
+package exercicio.util;
+
+import exercicio.dominio.Movimentacao;
 
 public interface Subject {
 

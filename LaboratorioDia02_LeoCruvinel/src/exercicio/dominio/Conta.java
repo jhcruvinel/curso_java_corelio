@@ -1,10 +1,15 @@
-package exercicio;
+package exercicio.dominio;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
+
+import exercicio.util.COAF;
+import exercicio.util.ContaVisitor;
+import exercicio.util.Observer;
+import exercicio.util.Subject;
 
 public class Conta implements Subject {
 
@@ -18,6 +23,15 @@ public class Conta implements Subject {
     public void registerObserver(Observer o) {
         this.observers.add(o);
     }
+    
+    /**
+     * Accept visitor
+     */
+    public void accept(ContaVisitor visitor) {
+    	visitor.visitaConta(this);
+    }
+
+    
 
     @Override
     public void notifyObservers(Movimentacao movimentacao) {
@@ -77,6 +91,7 @@ public class Conta implements Subject {
 	} 
 	
 	public void extratoMovimentacao() {
+		System.out.println("-----------------------------------------------------");
 		movimentacoes.forEach(Movimentacao::imprime);
 	}
 	

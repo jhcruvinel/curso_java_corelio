@@ -1,4 +1,4 @@
-package exercicio;
+package exercicio.dominio;
 
 import java.util.Date;
 import java.util.function.Consumer;

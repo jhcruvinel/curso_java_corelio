@@ -1,7 +1,12 @@
-package exercicio;
+package exercicio.dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+
+import exercicio.util.TransferenciaEntreContasDiferentes;
+import exercicio.util.TransferenciaEntreMinhasContas;
+import exercicio.util.TransferenciaStrategy;
 
 public class Cliente {
 
@@ -10,6 +15,30 @@ public class Cliente {
 	private String endereço;
 	private String telefone;
 	private List<Conta> contas;
+
+	public void transfereEntreMinhasContas(int idContaDebito, int idContatCredito, double valor) {
+		transfere(idContaDebito, idContatCredito, valor, new TransferenciaEntreMinhasContas());
+	}
+	
+	public void transfereEntreContasDiferentes(int idContaDebito, int idContatCredito, double valor) {
+		transfere(idContaDebito, idContatCredito, valor, new TransferenciaEntreContasDiferentes());
+	}
+	
+	public void transfere(int idContaDebito, int idContatCredito, double valor, TransferenciaStrategy transferenciaStrategy) {
+		for (Conta conta: contas) {
+			if (conta.getId() == idContaDebito) {
+				conta.debito("Debito de Transferencia entre contas", valor);
+				if (transferenciaStrategy.calculaTaxa(valor) > 0.0) {
+					conta.debito("Taxa de Transferencia", transferenciaStrategy.calculaTaxa(valor));
+				}	
+			}
+		}
+		for (Conta conta: contas) {
+			if (conta.getId() == idContatCredito) {
+				conta.credito("Credito de Transferencia entre contas", valor);
+			}
+		}
+	}
 	
 	public void imprimeNome() {
 		System.out.println(nome + " " + sobrenome);
@@ -71,6 +100,7 @@ public class Cliente {
             m.sobrenome = this.sobrenome;
             m.endereço = this.endereço;
             m.telefone = this.telefone;
+            m.contas = new ArrayList<Conta>();
             return m;
         }
 	}

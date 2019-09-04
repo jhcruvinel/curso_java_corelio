@@ -1,4 +1,6 @@
-package exercicio;
+package exercicio.util;
+
+import exercicio.dominio.Cliente;
 
 public class AdapterClienteAmericano extends Cliente {
 	private ClienteAmericano clienteAmericano;

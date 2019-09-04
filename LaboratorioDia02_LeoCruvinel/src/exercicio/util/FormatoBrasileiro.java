@@ -1,4 +1,4 @@
-package exercicio;
+package exercicio.util;
 
 public class FormatoBrasileiro implements Formato {
 
