@@ -44,6 +44,7 @@ public class Conta implements Subject {
 		saldo += valor;
 		movimentacoes.add(new Movimentacao.Builder()
                 .set(p -> {
+                	p.conta = this;
                     p.dataHora = new Date();
                     p.tipoMovimentacao = TipoMovimentacao.CREDITO;
                     p.descricao = descricao;
@@ -55,6 +56,7 @@ public class Conta implements Subject {
 		saldo -= valor;
 		movimentacoes.add(new Movimentacao.Builder()
                 .set(p -> {
+                	p.conta = this;
                     p.dataHora = new Date();
                     p.tipoMovimentacao = TipoMovimentacao.DEBITO;
                     p.descricao = descricao;
@@ -65,7 +67,6 @@ public class Conta implements Subject {
 	public void saque(double valor) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		int hora = cal.get(Calendar.HOUR_OF_DAY);
-		System.out.println(hora);
 		if (valor <= 1000.0 && (hora >= 6 && hora <= 21)) {
 			debito("SAQUE", valor);			
 		} else {
@@ -79,6 +80,7 @@ public class Conta implements Subject {
 		saldo += valor;
 		Movimentacao movimentacao = new Movimentacao.Builder()
                 .set(p -> {
+                	p.conta = this;
                     p.dataHora = new Date();
                     p.tipoMovimentacao = TipoMovimentacao.CREDITO;
                     p.descricao = "DEPOSITO";

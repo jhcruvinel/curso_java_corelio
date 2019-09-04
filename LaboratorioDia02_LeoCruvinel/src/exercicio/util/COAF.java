@@ -1,5 +1,9 @@
 package exercicio.util;
 
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,7 @@ public final class COAF implements Observer {
 	@Override
 	public void auditaMovimentacao(Movimentacao movimentacao) {
         movimentacoes.add(movimentacao);
+        cadastraMovimentacaoSuspeita(movimentacao);
     }
 	
 	public void extratoMovimentacoesSuspeitas() {
@@ -78,5 +83,47 @@ public final class COAF implements Observer {
 	}
 	
 	
+    public static void buscaMovimentacoes() {
+    	try {
+	        // Criando o HttpClient
+    		HttpClient client = HttpClient.newHttpClient();
+	        //Criando um HttpRequest do tipo Get e especificando a URI de consulta
+	        HttpRequest request = HttpRequest.newBuilder().GET().uri(
+	        		URI.create("http://localhost:3000/movimentacoes")).build();
+	        // Enviando a requisição e recebendo o Objeto de resposta da mesma.
+	        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+	        // Extraindo o retorno da requisição
+	        String body = response.body();
+	        // Imprimindo o resultado da mesma
+	        System.out.println(body);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    }
+	
+	public static void cadastraMovimentacaoSuspeita(Movimentacao m) {
+		try {
+			// Criando o HttpClient
+			HttpClient client = HttpClient.newHttpClient();
+			// String no formato Json que irá conter o corpo da requisição POST
+			String body = "{\"idConta\": "+m.getConta().getId()+", "
+					+ "\"tipo\": \""+m.getTipoMovimentacao()+"\", "
+					+ "\"descricao\": \""+m.getDescricao()+"\", "
+					+ "\"valor\": "+m.getValor()+", "
+					+ "\"dataHora\": \""+m.getDataHora()+"\"}";
+			// Criando um HttpRequest do tipo Post, especificando sua URI e atribuindo ao
+			// método Post o corpo da requisição
+			HttpRequest request = HttpRequest.newBuilder().headers("content-type", "application/json").POST(HttpRequest.BodyPublishers.ofString(body))
+					.uri(URI.create("http://localhost:3000/movimentacoes")).build();
+			// Enviando a requisição e recebendo o Objeto de resposta da mesma.
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			// Extraindo status de resposta da requisição Post
+			int statusCode = response.statusCode();
+			// Imprimindo resultado no console
+			System.out.println(String.format("Status code: %s", statusCode));
+		} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+	}
 
 }

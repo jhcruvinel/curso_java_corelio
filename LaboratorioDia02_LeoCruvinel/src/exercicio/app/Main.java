@@ -32,7 +32,6 @@ public class Main {
 		c1.imprimeNome();
 //		AdapterClienteAmericano adapter = new AdapterClienteAmericano(c1);
 		
-		COAF.getInstance().extratoMovimentacoesSuspeitas();
 
 		Conta ct2 = new ContaCorrente.Builder()
 				.set(p -> {
@@ -64,6 +63,8 @@ public class Main {
 		
 		c1.imprimeNome();
 
+		COAF.getInstance().extratoMovimentacoesSuspeitas();
+		COAF.buscaMovimentacoes();
 		
 		
 	}

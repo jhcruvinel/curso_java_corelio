@@ -17,7 +17,7 @@ public class Movimentacao {
 
 	public static class Builder {
 		
-		private Conta conta;
+		public Conta conta;
 		public Date dataHora;
 		public TipoMovimentacao tipoMovimentacao;
 		public String descricao;
