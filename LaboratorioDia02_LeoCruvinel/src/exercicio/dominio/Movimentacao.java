@@ -39,6 +39,7 @@ public class Movimentacao {
             m.tipoMovimentacao = this.tipoMovimentacao;
             m.descricao = this.descricao;
             m.valor = this.valor;
+            this.conta.getPublisher().submit(m);
             return m;
         }
 	}
@@ -87,7 +88,6 @@ public class Movimentacao {
 	public void setConta(Conta conta) {
 		this.conta = conta;
 	}
-	
-	
+
 	
 }

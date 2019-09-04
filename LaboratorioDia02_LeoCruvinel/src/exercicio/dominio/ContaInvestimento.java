@@ -2,9 +2,11 @@ package exercicio.dominio;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.SubmissionPublisher;
 import java.util.function.Consumer;
 
 import exercicio.util.ContaVisitor;
+import exercicio.util.SubscriberMovimentacao;
 
 public class ContaInvestimento extends Conta {
 
@@ -56,6 +58,9 @@ public class ContaInvestimento extends Conta {
             m.setCliente(this.cliente);
             m.setMovimentacoes(this.movimentacoes);
             m.setTipoConta(TipoConta.INVESTIMENTO);
+            m.setPublisher(new SubmissionPublisher<Movimentacao>());
+            SubscriberMovimentacao movimentacaoSubscriber = new SubscriberMovimentacao();
+            m.getPublisher().subscribe(movimentacaoSubscriber);
             return m;
         }
 	}

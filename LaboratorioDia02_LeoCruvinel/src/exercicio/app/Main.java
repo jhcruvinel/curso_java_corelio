@@ -5,11 +5,11 @@ import exercicio.dominio.Conta;
 import exercicio.dominio.ContaCorrente;
 import exercicio.util.BaseMensalVisitor;
 import exercicio.util.COAF;
+import exercicio.util.AdaptadorClienteAmericano;
 
 public class Main {
 
 	public static void main (String[] args) throws Exception {
-		
 		
 		Cliente c1 = new Cliente.Builder()
                 .set(p -> {
@@ -29,7 +29,7 @@ public class Main {
 		ct1.extratoMovimentacao();
 		System.out.println("Saldo: "+ct1.getSaldo());
 		c1.getContas().add(ct1);
-		c1.imprimeNome();
+		c1.imprimeFormatoBrasileiro();
 //		AdapterClienteAmericano adapter = new AdapterClienteAmericano(c1);
 		
 
@@ -61,11 +61,12 @@ public class Main {
 		}
 		
 		
-		c1.imprimeNome();
-
 		COAF.getInstance().extratoMovimentacoesSuspeitas();
 		COAF.buscaMovimentacoes();
 		
+		c1.imprimeFormatoBrasileiro();
+		AdaptadorClienteAmericano f = new AdaptadorClienteAmericano(c1);
+		f.imprimeFormatoBrasileiro();
 		
 	}
 	

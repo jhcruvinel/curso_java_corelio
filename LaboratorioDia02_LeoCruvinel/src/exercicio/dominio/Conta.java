@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.SubmissionPublisher;
 
 import exercicio.util.COAF;
 import exercicio.util.ContaVisitor;
@@ -18,6 +19,8 @@ public class Conta implements Subject {
 	private List<Movimentacao> movimentacoes;
 	private List<Observer> observers;
 	private TipoConta tipoConta;
+	private SubmissionPublisher<Movimentacao> publisher;
+	
 
     @Override
     public void registerObserver(Observer o) {
@@ -142,6 +145,15 @@ public class Conta implements Subject {
 	public void setTipoConta(TipoConta tipoConta) {
 		this.tipoConta = tipoConta;
 	}
+
+	public SubmissionPublisher<Movimentacao> getPublisher() {
+		return publisher;
+	}
+
+	public void setPublisher(SubmissionPublisher<Movimentacao> publisher) {
+		this.publisher = publisher;
+	}
+
 	
 	
 }

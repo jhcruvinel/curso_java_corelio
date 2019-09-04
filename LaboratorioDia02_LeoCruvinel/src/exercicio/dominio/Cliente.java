@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import exercicio.util.FormatoBrasileiro;
 import exercicio.util.TransferenciaEntreContasDiferentes;
 import exercicio.util.TransferenciaEntreMinhasContas;
 import exercicio.util.TransferenciaStrategy;
 
-public class Cliente {
+public class Cliente implements FormatoBrasileiro {
 
 	private String nome;
 	private String sobrenome;
@@ -16,6 +17,10 @@ public class Cliente {
 	private String telefone;
 	private List<Conta> contas;
 
+	public void imprimeFormatoBrasileiro() {
+		System.out.println(nome + " " + sobrenome);
+	}
+	
 	public void transfereEntreMinhasContas(int idContaDebito, int idContatCredito, double valor) {
 		transfere(idContaDebito, idContatCredito, valor, new TransferenciaEntreMinhasContas());
 	}
@@ -38,10 +43,6 @@ public class Cliente {
 				conta.credito("Credito de Transferencia entre contas", valor);
 			}
 		}
-	}
-	
-	public void imprimeNome() {
-		System.out.println(nome + " " + sobrenome);
 	}
 	
 	public double calcularAplicacoesTotais() {
@@ -143,6 +144,15 @@ public class Cliente {
 	}
 
 	public void setContas(List<Conta> contas) {
+		this.contas = contas;
+	}
+
+	public Cliente(String nome, String sobrenome, String endereço, String telefone, List<Conta> contas) {
+		super();
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.endereço = endereço;
+		this.telefone = telefone;
 		this.contas = contas;
 	}
 	
