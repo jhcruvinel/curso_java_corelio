@@ -1,4 +1,4 @@
-package com.exercicio.exercicio1;
+package com.exercicio.laboratorio1.entidades;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,10 +1,12 @@
-package com.exercicio.exercicio1;
+package com.exercicio.laboratorio1.servicos;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.exercicio.laboratorio1.entidades.Pessoa;
 
 @RestController
 public class PessoaController {
