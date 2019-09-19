@@ -2,8 +2,12 @@ package com.exercicio.laboratorio2;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -19,6 +23,22 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.exercicio.laboratorio2"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(apiInfo());
     }
+    
+    private ApiInfo apiInfo() {
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("My REST API")
+                .description("Api de Books")
+                .version("v1")
+                .termsOfServiceUrl("servicocruvinelisabel.com.br/termos_servico")
+                .contact(new Contact("José e Isabel", "www.trt3.jus.br", "cursocorelio@company.com"))
+                .license("LGPL 2.1")
+                .licenseUrl("https://www.gnu.org/licenses/old-licenses/lgpl-2.1.pt-br.html")
+                .build();
+
+        return apiInfo;
+    }
+    
 }
