@@ -62,7 +62,6 @@ public class Main {
 		
 		
 		COAF.getInstance().extratoMovimentacoesSuspeitas();
-		COAF.buscaMovimentacoes();
 		
 		c1.imprimeFormatoBrasileiro();
 		AdaptadorClienteAmericano f = new AdaptadorClienteAmericano(c1);
