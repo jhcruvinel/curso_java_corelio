@@ -18,8 +18,10 @@ public class Application {
     @Bean
     public RouteLocator myRoutes(RouteLocatorBuilder builder) {
         return builder.routes()
-        	.route(p -> p.path("/coaf").uri("https://2886795331-8081-shadow02.environments.katacoda.com"))
-        	.route(p -> p.path("/bank").uri("https://2886795331-8080-shadow02.environments.katacoda.com"))
+       		.route(p -> p.path("/coaf").uri("https://2886795331-8081-shadow02.environments.katacoda.com"))
+           	.route(p -> p.path("/movimentacao").uri("https://2886795331-8080-shadow02.environments.katacoda.com"))
+        	.route(p -> p.path("/conta").uri("https://2886795331-8080-shadow02.environments.katacoda.com"))
+        	.route(p -> p.path("/cliente").uri("https://2886795331-8080-shadow02.environments.katacoda.com"))
             .build();
     }
     

@@ -8,7 +8,7 @@ import com.exercicio.home_banking.entities.Movimentacao;
 import io.swagger.annotations.Api;
 
 @Api
-@RepositoryRestResource(collectionResourceRel = "movimentacao", path = "movimentacao")
+@RepositoryRestResource(collectionResourceRel = "coaf", path = "coaf")
 public interface MovimentacaoServices extends PagingAndSortingRepository<Movimentacao, Long> {
 
 }
