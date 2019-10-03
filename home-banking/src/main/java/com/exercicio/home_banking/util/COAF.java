@@ -1,23 +1,22 @@
 package com.exercicio.home_banking.util;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 import com.exercicio.home_banking.entities.Movimentacao;
 
 public final class COAF implements Observer {
 
-	private List<Movimentacao> movimentacoes;
-		
 	@Override
 	public void auditaMovimentacao(Movimentacao movimentacao) {
-        movimentacoes.add(movimentacao);
-        //cadastraMovimentacaoSuspeita(movimentacao);
-    }
-	
+		cadastraMovimentacaoSuspeita(movimentacao);
+	}
+
 	public void extratoMovimentacoesSuspeitas() {
 		System.out.println(" ******** MOVIMENTACOES SUSPEITAS ******** ");
-		movimentacoes.forEach(Movimentacao::imprime);
+		buscaMovimentacoes();
 		System.out.println(" ***************************************** ");
 	}
 
@@ -28,7 +27,6 @@ public final class COAF implements Observer {
 	 */
 	private COAF() {
 		// to prevent instantiating by Reflection call
-		movimentacoes = new ArrayList<Movimentacao>();
 		if (instance != null) {
 			throw new IllegalStateException("J� inicializada.");
 		}
@@ -69,48 +67,45 @@ public final class COAF implements Observer {
 		return result;
 	}
 
-	public List<Movimentacao> getMovimentacoes() {
-		System.out.println("Listando movimentacoes suspeitas");
-		return movimentacoes;
+	public static void buscaMovimentacoes() {
+		try {
+			// Criando o HttpClient
+			HttpClient client = HttpClient.newHttpClient();
+			// Criando um HttpRequest do tipo Get e especificando a URI de consulta
+			HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://localhost:3000/movimentacoes"))
+					.build();
+			// Enviando a requisicao e recebendo o Objeto de resposta da mesma.
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			// Extraindo o retorno da requisi��o
+			String body = response.body();
+			// Imprimindo o resultado da mesma
+			System.out.println(body);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
-		this.movimentacoes = movimentacoes;
+	public static void cadastraMovimentacaoSuspeita(Movimentacao m) {
+		try {
+			// Criando o HttpClient
+			HttpClient client = HttpClient.newHttpClient();
+			// String no formato Json que ira conter o corpo da requisicao POST
+			String body = "{\"idConta\": " + m.getConta().getId() + ", " + "\"tipo\": \"" + m.getTipoMovimentacao()
+					+ "\", " + "\"descricao\": \"" + m.getDescricao() + "\", " + "\"valor\": " + m.getValor() + ", "
+					+ "\"dataHora\": \"" + m.getDataHora() + "\"}";
+			// Criando um HttpRequest do tipo Post, especificando sua URI e atribuindo ao //
+			// m�todo Post o corpo da requisi��o
+			HttpRequest request = HttpRequest.newBuilder().headers("content-type", "application/json")
+					.POST(HttpRequest.BodyPublishers.ofString(body))
+					.uri(URI.create("http://localhost:3000/movimentacoes")).build();
+			// Enviando a requisicao e recebendo o Objeto de resposta da mesma.
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			// Extraindo status de resposta da requisicao Post
+			int statusCode = response.statusCode(); // Imprimindo resultado no console
+			System.out.println(String.format("Status code: %s", statusCode));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-	
-	
-	/*
-	 * public static void buscaMovimentacoes() { try { // Criando o HttpClient
-	 * HttpClient client = HttpClient.newHttpClient(); //Criando um HttpRequest do
-	 * tipo Get e especificando a URI de consulta HttpRequest request =
-	 * HttpRequest.newBuilder().GET().uri(
-	 * URI.create("http://localhost:3000/movimentacoes")).build(); // Enviando a
-	 * requisi��o e recebendo o Objeto de resposta da mesma. HttpResponse<String>
-	 * response = client.send(request, HttpResponse.BodyHandlers.ofString()); //
-	 * Extraindo o retorno da requisi��o String body = response.body(); //
-	 * Imprimindo o resultado da mesma System.out.println(body); } catch (Exception
-	 * e) { e.printStackTrace(); } }
-	 */
-	
-	/*
-	 * public static void cadastraMovimentacaoSuspeita(Movimentacao m) { try { //
-	 * Criando o HttpClient HttpClient client = HttpClient.newHttpClient(); //
-	 * String no formato Json que ir� conter o corpo da requisi��o POST String body
-	 * = "{\"idConta\": "+m.getConta().getId()+", " +
-	 * "\"tipo\": \""+m.getTipoMovimentacao()+"\", " +
-	 * "\"descricao\": \""+m.getDescricao()+"\", " + "\"valor\": "+m.getValor()+", "
-	 * + "\"dataHora\": \""+m.getDataHora()+"\"}"; // Criando um HttpRequest do tipo
-	 * Post, especificando sua URI e atribuindo ao // m�todo Post o corpo da
-	 * requisi��o HttpRequest request =
-	 * HttpRequest.newBuilder().headers("content-type",
-	 * "application/json").POST(HttpRequest.BodyPublishers.ofString(body))
-	 * .uri(URI.create("http://localhost:3000/movimentacoes")).build(); // Enviando
-	 * a requisi��o e recebendo o Objeto de resposta da mesma. HttpResponse<String>
-	 * response = client.send(request, HttpResponse.BodyHandlers.ofString()); //
-	 * Extraindo status de resposta da requisi��o Post int statusCode =
-	 * response.statusCode(); // Imprimindo resultado no console
-	 * System.out.println(String.format("Status code: %s", statusCode)); } catch
-	 * (Exception e) { e.printStackTrace(); } }
-	 */
 
 }
