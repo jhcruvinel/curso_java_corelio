@@ -23,7 +23,7 @@ public class BoletoResource {
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/boleto")
+    @Path("{valor}/{vencimento}")
     public double calculaBoleto(@PathParam("valor") double valor, @PathParam("vencimento") Date vencimento) {
         return service.greeting(valor, vencimento);
     }

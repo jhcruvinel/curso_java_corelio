@@ -21,7 +21,7 @@ public class FinanciamentoCasaResource {
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/fcasa")
+    @Path("{valor}/{meses}")
     public double calculaFinanciamentoCasa(@PathParam("valor") double valor, @PathParam("meses") int meses) {
         return service.fCasa(valor, meses);
     }

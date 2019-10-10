@@ -21,7 +21,7 @@ public class FinanciamentoVeiculoResource {
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/fveiculo")
+    @Path("{valor}/{meses}")
     public double calculaFinanciamentoVeiculo(@PathParam("valor") double valor, @PathParam("meses") int meses) {
         return service.fVeiculo(valor, meses);
     }

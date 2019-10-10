@@ -23,7 +23,7 @@ public class LocalizadorAgenciaResource {
     
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/agencias")
+    @Path("{cidade}")
     public ArrayList<String> localizaAgencias(@PathParam("cidade") String cidade) {
         return service.localizaAgencia(cidade);
     }
